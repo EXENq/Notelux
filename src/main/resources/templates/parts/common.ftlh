@@ -1,12 +1,13 @@
 <#macro page>
-<!DOCTYPE html>
-<html>
+        <!DOCTYPE html>
+<html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>App</title>
+    <meta charset="UTF-8">
+    <title>App</title>
+    <link rel="stylesheet" href="/static/style.css">
 </head>
 <body>
 <#nested>
 </body>
 </html>
-</#macro>
+        </#macro>
