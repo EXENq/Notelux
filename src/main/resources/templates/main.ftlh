@@ -1,38 +1,53 @@
 <#import "parts/common.ftlh" as c>
-<#import "parts/login.ftlh" as l>
 
 <@c.page>
-	<div>
-		<@l.logout />
-		<span><a href="/user">User list</a></span>
-	</div>
-	<div>
-		<form method="post" enctype="multipart/form-data">
-			<input type="text" name="text" placeholder="message">
-			<input type="text" name="tag" placeholder="tag">
-			<input type="file" name="file">
-			<input type="hidden" name="_csrf" value="${_csrf.token}">
-			<button type="submit">Add</button>
+	<div class="input-group mb-3">
+		<form method="get" action="/main">
+			<div class="row">
+				<div class="col">
+					<input type="text" name="filter" class="form-control" placeholder="Search by tag" value=${filter?ifExists}>
+				</div>
+				<div class="col">
+					<button type="submit" class="btn btn-primary">Search</button>
+				</div>
+			</div>
 		</form>
 	</div>
-	<div>Messages list</div>
-	<form method="get" action="/main">
-		<input type="text" name="filter" value=${filter?ifExists}>
-		<button type="submit">Find</button>
-	</form>
+	<a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseForm" role="button" aria-expanded="false" aria-controls="collapseExample">
+		Add new message
+	</a>
+	<div class="collapse" id="collapseForm">
+		<div class="input-group mb-3">
+			<form method="post" enctype="multipart/form-data">
+				<input type="text" name="text" class="form-control mb-2 mt-2" placeholder="Message">
+				<input type="text" name="tag" class="form-control mb-2" placeholder="Tag">
+				<label for="formFile" class="form-label">Image</label>
+				<input type="file" name="file" class="form-control mb-2" id="formFile">
+				<input type="hidden" name="_csrf" value="${_csrf.token}">
+				<button type="submit" class="btn btn-primary">Send message</button>
+			</form>
+		</div>
+	</div>
+	<div class="row row-cols-1 row-cols-md-4 g-4">
 	<#list messages as message>
-	<div>
-		<b>${message.id}</b>
-		<span>${message.text}</span>
-		<i>${message.tag}</i>
-		<strong>${message.authorName}</strong>
-		<div>
-			<#if message.filename??>
-			<img src="/img/${message.filename}">
-			</#if>
+		<div class="col">
+		<div class="card h-100 my-3">
+			<div >
+				<#if message.filename??>
+					<img src="/img/${message.filename}" class="card-img-top">
+				</#if>
+			</div>
+			<div class="card-body">
+				<h5 class="card-title">${message.tag}</h5>
+				<p class="card-text">${message.text}</p>
+			</div>
+			<div class="card-footer text-muted">
+				${message.authorName}
+			</div>
 		</div>
 	</div>
 	<#else>
 	No messages
 	</#list>
+	</div>
 </@>
