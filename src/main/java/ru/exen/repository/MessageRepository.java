@@ -1,10 +1,9 @@
 package ru.exen.repository;
 
-import java.util.List;
-
 import org.springframework.data.repository.CrudRepository;
-
 import ru.exen.model.Message;
+
+import java.util.List;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
 	

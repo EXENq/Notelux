@@ -1,16 +1,14 @@
 package ru.exen.model;
 
-import java.util.Collection;
-import java.util.Set;
+import lombok.Data;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
-
-import org.springframework.security.core.GrantedAuthority;
-import org.springframework.security.core.userdetails.UserDetails;
-
-import lombok.Data;
+import java.util.Collection;
+import java.util.Set;
 
 @Entity
 @Table(name = "usr")
