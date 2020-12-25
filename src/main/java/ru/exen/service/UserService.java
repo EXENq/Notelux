@@ -55,7 +55,7 @@ public class UserService implements UserDetailsService {
 	}
 
 	private void sendMessage(User user) {
-		if (StringUtils.isEmpty(user.getEmail())){
+		if (!StringUtils.isEmpty(user.getEmail())){
 			String message = String.format(
 					"Hello, %s! \n" +
 							"Welcome! Please, visit next link for activation your account: http://localhost:8080/activate/%s",
@@ -95,7 +95,6 @@ public class UserService implements UserDetailsService {
 		for(String key : form.keySet()) {
 			if(roles.contains(key)) {
 				user.getRoles().add(Role.valueOf(key));
-
 			}
 		}
 
@@ -105,7 +104,8 @@ public class UserService implements UserDetailsService {
 	public void updateProfile(User user, String password, String email) {
 		String userEmail = user.getEmail();
 
-		boolean isEmailChanged = (email != null && !email.equals(userEmail)) || (userEmail != null && !userEmail.equals(email));
+		boolean isEmailChanged = (email != null && !email.equals(userEmail)) ||
+				(userEmail != null && !userEmail.equals(email));
 
 		if (isEmailChanged){
 			user.setEmail(email);
