@@ -1,25 +1,27 @@
 <#import "parts/common.ftlh" as c>
 
 <@c.page>
-	<div>List of users</div>
-	<table>
-		<thead>
+	<table class="table caption-top">
+		<caption>List of users</caption>
+		<thead class="table-dark">
 			<tr>
-				<th>Name</th>
-				<th>Role</th>
-				<th></th>
+				<th scope="col">ID</th>
+				<th scope="col">Name</th>
+				<th scope="col">Role</th>
+				<th scope="col"></th>
 			</tr>
 		</thead>
 		<tbody>
 			<#list users as user>
 				 <tr>
-				 	<td>${user.username}</td>
-				 	<td>
+					 <th scope="row">${user.id}</th>
+					 <td>${user.username}</td>
+					 <td>
 				 		<#list user.roles as role>
-				 			${role}<#sep>, 
+				 			${role}<#sep>,
 				 		</#list>
-				 	</td>
-				 	<td><a href="/user/${user.id}">edit</a></td>
+					 </td>
+				 	<td><a href="/user/${user.id}" class="btn btn-primary">edit</a></td>
 				 </tr>
 			</#list>
 		</tbody>
