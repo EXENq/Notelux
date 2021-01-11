@@ -4,10 +4,10 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 @SpringBootApplication
-public class CourceProjectApplication {
+public class NoteluxApplication {
 
 	public static void main(String[] args) {
-		SpringApplication.run(CourceProjectApplication.class, args);
+		SpringApplication.run(NoteluxApplication.class, args);
 	}
 
 }

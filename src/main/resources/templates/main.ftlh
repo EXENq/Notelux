@@ -5,7 +5,7 @@
 		<form method="get" action="/main">
 			<div class="row">
 				<div class="col">
-					<input type="text" name="filter" class="form-control" placeholder="Search by tag" value=${filter?ifExists}>
+					<input type="text" name="filter" class="form-control" placeholder="Search by tag" value="${filter?ifExists}" />
 				</div>
 				<div class="col">
 					<button type="submit" class="btn btn-primary">Search</button>

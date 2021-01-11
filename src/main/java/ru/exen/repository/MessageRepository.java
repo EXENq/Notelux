@@ -1,12 +1,14 @@
 package ru.exen.repository;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.repository.CrudRepository;
 import ru.exen.model.Message;
-
-import java.util.List;
+import ru.exen.model.User;
 
 public interface MessageRepository extends CrudRepository<Message, Long> {
 	
-	List<Message> findByTag(String tag);
-
+	Page<Message> findAll(Pageable pageable);
+	Page<Message> findByTag(String tag, Pageable pageable);
+	Page<Message> findByAuthor(User user, Pageable pageable);
 }

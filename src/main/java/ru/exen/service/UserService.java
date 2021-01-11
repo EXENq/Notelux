@@ -62,7 +62,7 @@ public class UserService implements UserDetailsService {
 		if (!StringUtils.isEmpty(user.getEmail())){
 			String message = String.format(
 					"Hello, %s! \n" +
-							"Welcome! Please, visit next link for activation your account: http://%s/activate/%s",
+							"Welcome to Notelux! Please, visit next link for activation your account: http://%s/activate/%s",
 					user.getUsername(),
 					hostname,
 					user.getActivationCode()
