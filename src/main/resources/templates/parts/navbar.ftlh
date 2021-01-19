@@ -33,7 +33,10 @@
             </ul>
             <div class="navbar-text me-2"><#if user??>${name}<#else>Please, log in</#if></div>
             <div>
-                <@l.logout />
+                <form action="/logout" method="post">
+                    <input type="hidden" name="_csrf" value="${_csrf.token}" />
+                    <button type="submit" class="btn btn-primary"><#if user??>Sign Out<#else>Log in</#if></button>
+                </form>
             </div>
         </div>
     </div>

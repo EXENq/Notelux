@@ -16,13 +16,23 @@
             <h5 class="card-title">#${message.tag}</h5>
             <p class="card-text">${message.text}</p>
         </div>
-        <div class="card-footer text-muted">
-            <a href="/user-messages/${message.author.id}">${message.authorName}</a>
-            <#if message.author.id == currentUserId>
-                <a href="/user-messages/${message.author.id}?message=${message.id}" class="btn btn-primary">
-                    Edit
+        <div class="card-footer text-muted container">
+            <div class="row">
+                <a class="col align-self-center" href="/user-messages/${message.author.id}">${message.authorName}</a>
+                <a class="col align-self-center" href="/messages/${message.id}/like" style="text-decoration: none;">
+                    <#if message.meLiked>
+                        <i class="fas fa-heart"></i>
+                    <#else>
+                        <i class="far fa-heart"></i>
+                    </#if>
+                    ${message.likes}
                 </a>
-            </#if>
+                <#if message.author.id == currentUserId>
+                    <a href="/user-messages/${message.author.id}?message=${message.id}" class="col btn btn-primary">
+                        Edit
+                    </a>
+                </#if>
+            </div>
         </div>
     </div>
 </div>
