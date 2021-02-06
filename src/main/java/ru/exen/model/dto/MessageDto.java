@@ -1,8 +1,11 @@
 package ru.exen.model.dto;
 
+import ru.exen.model.Comment;
 import ru.exen.model.Message;
 import ru.exen.model.User;
 import ru.exen.model.util.MessageHelper;
+
+import java.util.List;
 
 public class MessageDto {
     private Long id;
@@ -12,6 +15,7 @@ public class MessageDto {
     private String filename;
     private Long likes;
     private Boolean meLiked;
+    private List<Comment> comments;
 
     public MessageDto(Message message, Long likes, Boolean meLiked) {
         this.id = message.getId();
@@ -19,12 +23,17 @@ public class MessageDto {
         this.tag = message.getTag();
         this.author = message.getAuthor();
         this.filename = message.getFilename();
+        this.comments = message.getComments();
         this.likes = likes;
         this.meLiked = meLiked;
     }
 
     public String getAuthorName() {
         return MessageHelper.getAuthorName(author);
+    }
+
+    public int getCommentsCount(){
+        return MessageHelper.getCommentsCount(comments);
     }
 
     public Long getId() {

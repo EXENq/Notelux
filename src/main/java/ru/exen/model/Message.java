@@ -7,6 +7,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -35,6 +36,9 @@ public class Message implements Serializable {
 	)
 	private Set<User> likes = new HashSet<>();
 
+	@OneToMany(mappedBy = "message", fetch = FetchType.LAZY)
+	private List<Comment> comments;
+
 	public Message() {
 	}
 
@@ -47,6 +51,10 @@ public class Message implements Serializable {
 	public String getAuthorName() {
 		return MessageHelper.getAuthorName(author);
 	}
+
+//	public int getCommentsCount(){
+//		return MessageCommentHelper.getCommentsCount(comments);
+//	}
 
 	public User getAuthor() {
 		return author;
@@ -94,5 +102,13 @@ public class Message implements Serializable {
 
 	public void setLikes(Set<User> likes) {
 		this.likes = likes;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 }

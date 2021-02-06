@@ -7,6 +7,9 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.util.UriComponents;
+import org.springframework.web.util.UriComponentsBuilder;
 import ru.exen.model.Role;
 import ru.exen.model.User;
 import ru.exen.service.UserService;
@@ -15,7 +18,6 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/user")
-
 public class UserController {
 	@Autowired
 	private UserService userService;
@@ -102,5 +104,11 @@ public class UserController {
 		}
 
 		return "subscriptions";
+	}
+
+	@GetMapping("delete/{id}")
+	public String deleteUser(@PathVariable("id") Long id){
+		userService.deleteUser(id);
+		return "redirect:/user";
 	}
 }

@@ -182,5 +182,20 @@ public class MessageController {
         return "redirect:" + components.getPath();
     }
 
+    @GetMapping("/message-delete/{id}")
+    public String deleteMessage(
+            @PathVariable("id") Long id,
+            RedirectAttributes redirectAttributes,
+            @RequestHeader(required = false) String referer
+    ){
+        messageRepo.deleteMessage(id);
 
+        UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
+
+        components.getQueryParams()
+                .entrySet()
+                .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
+
+        return "redirect:" + components.getPath();
+    }
 }

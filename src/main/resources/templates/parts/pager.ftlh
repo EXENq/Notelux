@@ -16,7 +16,25 @@
     </#if>
     <div class="container mt-3">
         <div class="row">
-            <ul class="pagination col justify-content-center">
+            <ul class="pagination pagination-sm">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Elements on page</a>
+                </li>
+                <#list [1, 5, 10, 25, 50] as c>
+                    <#if c == page.getSize()>
+                        <li class="page-item active">
+                            <a class="page-link" href="#">${c}</a>
+                        </li>
+                    <#else>
+                        <li class="page-item">
+                            <a class="page-link" href="${url}?page=${page.getNumber()}&size=${c}">${c}</a>
+                        </li>
+                    </#if>
+                </#list>
+            </ul>
+        </div>
+        <div class="row">
+            <ul class="pagination col">
                 <li class="page-item disabled">
                     <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Page</a>
                 </li>
@@ -32,23 +50,6 @@
                     <#else>
                         <li class="page-item">
                             <a class="page-link" href="${url}?page=${p - 1}&size=${page.getSize()}">${p}</a>
-                        </li>
-                    </#if>
-                </#list>
-            </ul>
-
-            <ul class="pagination col justify-content-center">
-                <li class="page-item disabled">
-                    <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Elements on page</a>
-                </li>
-                <#list [1, 5, 10, 25, 50] as c>
-                    <#if c == page.getSize()>
-                        <li class="page-item active">
-                            <a class="page-link" href="#">${c}</a>
-                        </li>
-                    <#else>
-                        <li class="page-item">
-                            <a class="page-link" href="${url}?page=${page.getNumber()}&size=${c}">${c}</a>
                         </li>
                     </#if>
                 </#list>
