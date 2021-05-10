@@ -6,6 +6,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.web.util.UriComponents;
@@ -60,10 +61,19 @@ public class UserController {
 	@PostMapping("profile")
 	public String updateProfile(
 			@AuthenticationPrincipal User user,
+			BindingResult bindingResult,
+			Model model,
 			@RequestParam String password,
 			@RequestParam String email
+
 	){
-		userService.updateProfile(user, password, email);
+		if (bindingResult.hasErrors()) {
+			Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+
+			model.addAttribute("errorsMap", errorsMap);
+		} else {
+			userService.updateProfile(user, password, email);
+		}
 
 		return "redirect:/user/profile";
 	}

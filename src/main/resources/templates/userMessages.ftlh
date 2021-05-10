@@ -10,9 +10,9 @@
     </#if>
 </#if>
 <div class="container my-3">
-    <div class="row">
-        <div class="col">
-            <div class="card">
+    <div class="row align-items-center">
+        <div class="col-sm-2">
+            <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Subscriptions</h5>
                     <p class="card-text">
@@ -21,12 +21,22 @@
                 </div>
             </div>
         </div>
-        <div class="col">
-            <div class="card">
+        <div class="col-sm-2">
+            <div class="card text-center">
                 <div class="card-body">
                     <h5 class="card-title">Subscribers</h5>
                     <p class="card-text">
                         <a href="/user/subscribers/${userChannel.id}/list">${subscribersCount}</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <div class="card text-center">
+                <div class="card-body">
+                    <h5 class="card-title">Posts</h5>
+                    <p class="card-text">
+                        ${messagesCount}
                     </p>
                 </div>
             </div>

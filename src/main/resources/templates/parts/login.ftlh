@@ -1,5 +1,6 @@
 <#macro login path isRegisterForm>
-<form action="${path}" method="post">
+    <#if !isRegisterForm><div class="fs-2 text-center">Log in</div></#if>
+    <form action="${path}" method="post">
     <div class="form-floating mb-3">
         <input type="text" class="form-control <#if (errorsMap['usernameError'])??>is-invalid</#if>"
                name="username" id="floatingInput" placeholder="User name" value="<#if user??>${user.username}</#if>" />
@@ -42,7 +43,7 @@
             </#if>
         </div>
         <div>
-            <div class="g-recaptcha" data-sitekey="site_key"></div>
+            <div class="g-recaptcha" data-sitekey=""></div>
             <#if captchaError??>
                 <div class="alert alert-danger" role="alert">
                     ${captchaError}

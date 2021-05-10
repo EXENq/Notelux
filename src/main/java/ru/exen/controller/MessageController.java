@@ -25,6 +25,9 @@ import ru.exen.service.MessageService;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Map;
 import java.util.Set;
 import java.util.UUID;
@@ -39,6 +42,9 @@ public class MessageController {
 
     @Value("${upload.path}")
     private String uploadPath;
+
+    @GetMapping("/support")
+    public String support(Map<String, Object> model) { return "support"; }
 
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
@@ -123,6 +129,7 @@ public class MessageController {
         model.addAttribute("userChannel", author);
         model.addAttribute("subscriptionsCount", author.getSubscriptions().size());
         model.addAttribute("subscribersCount", author.getSubscribers().size());
+        model.addAttribute("messagesCount", author.getMessages().size());
         model.addAttribute("isSubscriber", author.getSubscribers().contains(currentUser));
         model.addAttribute("page", page);
         model.addAttribute("message", message);
@@ -136,23 +143,30 @@ public class MessageController {
     public String updateMessage(
             @AuthenticationPrincipal User currentUser,
             @PathVariable Long user,
-            @RequestParam("id") Message message,
-            @RequestParam("text") String text,
-            @RequestParam("tag") String tag,
+            @Valid Message message,
+            BindingResult bindingResult,
+            Model model,
             @RequestParam("file") MultipartFile file
     ) throws IOException {
-        if (message.getAuthor().equals(currentUser)){
-            if (!StringUtils.isEmpty(text)){
-                message.setText(text);
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+
+            model.addAttribute("errorsMap", errorsMap);
+            model.addAttribute("message", message);
+        } else {
+            if (message.getAuthor().equals(currentUser)) {
+                if (!StringUtils.isEmpty(message.getText())) {
+                    message.setText(message.getText());
+                }
+
+                if (!StringUtils.isEmpty(message.getTag())) {
+                    message.setTag(message.getTag());
+                }
+
+                saveFile(message, file);
+
+                messageRepo.save(message);
             }
-
-            if (!StringUtils.isEmpty(tag)){
-                message.setTag(tag);
-            }
-
-            saveFile(message, file);
-
-            messageRepo.save(message);
         }
 
         return "redirect:/user-messages/" + user;
@@ -187,7 +201,13 @@ public class MessageController {
             @PathVariable("id") Long id,
             RedirectAttributes redirectAttributes,
             @RequestHeader(required = false) String referer
-    ){
+    ) throws IOException {
+        Message currentMessage = messageRepo.getOne(id);
+
+        if(currentMessage.getFilename() != null){
+            deleteFile(currentMessage.getFilename());
+        }
+
         messageRepo.deleteMessage(id);
 
         UriComponents components = UriComponentsBuilder.fromHttpUrl(referer).build();
@@ -197,5 +217,10 @@ public class MessageController {
                 .forEach(pair -> redirectAttributes.addAttribute(pair.getKey(), pair.getValue()));
 
         return "redirect:" + components.getPath();
+    }
+
+    public void deleteFile(String filename) throws IOException {
+        Path fileToDeletePath = Paths.get(uploadPath + "/" + filename);
+        Files.delete(fileToDeletePath);
     }
 }

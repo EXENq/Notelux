@@ -2,7 +2,7 @@
 
 <@c.page>
 	<table class="table caption-top">
-		<caption>List of users</caption>
+		<caption class="fs-2 text-center">List of users</caption>
 		<thead class="table-dark">
 			<tr>
 				<th scope="col">ID</th>

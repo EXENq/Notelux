@@ -1,5 +1,6 @@
+<a class="btn btn-primary my-2" href="/main"><i class="fas fa-arrow-left"></i> Back to messages list</a>
 <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapseCommentForm" role="button" aria-expanded="false" aria-controls="collapseExample">
-    Comments
+    Write a comment
 </a>
 <div class="collapse <#if comment??>show</#if>" id="collapseCommentForm">
     <div class="input-group mb-3">
