@@ -15,6 +15,8 @@ import ru.exen.model.Role;
 import ru.exen.model.User;
 import ru.exen.service.UserService;
 
+import javax.validation.Valid;
+import java.util.HashMap;
 import java.util.Map;
 
 @Controller
@@ -61,21 +63,31 @@ public class UserController {
 	@PostMapping("profile")
 	public String updateProfile(
 			@AuthenticationPrincipal User user,
-			BindingResult bindingResult,
 			Model model,
-			@RequestParam String password,
-			@RequestParam String email
+			@RequestParam("password") String password,
+			@RequestParam("email") String email
 
 	){
-		if (bindingResult.hasErrors()) {
-			Map<String, String> errorsMap = ControllerUtils.getErrors(bindingResult);
+		if (password.isEmpty() || email.isEmpty()) {
+			Map<String, String> errorsMap = new HashMap<String, String>();
+
+			if (password.isEmpty()){
+				errorsMap.put("passwordError", "Password cannot be empty");
+			}
+
+			if (email.isEmpty()){
+				errorsMap.put("emailError", "Email cannot be empty");
+			}
 
 			model.addAttribute("errorsMap", errorsMap);
 		} else {
 			userService.updateProfile(user, password, email);
 		}
 
-		return "redirect:/user/profile";
+		model.addAttribute("username", user.getUsername());
+		model.addAttribute("email", user.getEmail());
+
+		return "profile";
 	}
 
 	@GetMapping("/subscribe/{user}")

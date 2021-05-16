@@ -8,6 +8,8 @@ import ru.exen.model.User;
 import ru.exen.model.dto.MessageDto;
 import ru.exen.repository.MessageRepository;
 
+import java.util.Locale;
+
 @Service
 public class MessageService {
     @Autowired

@@ -28,7 +28,7 @@ public interface MessageRepository extends JpaRepository<Message, Long> {
 			"	sum(case when ml = :user then 1 else 0 end) >0" +
 			") " +
 			"from Message m left join m.likes ml " +
-			"where m.tag = :tag " +
+			"where lower(m.tag) like lower(concat('%', :tag,'%')) " +
 			"group by m")
 	Page<MessageDto> findByTag(@Param("tag") String tag, Pageable pageable,  @Param("user") User user);
 

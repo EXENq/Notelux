@@ -22,6 +22,7 @@ import ru.exen.model.dto.MessageDto;
 import ru.exen.repository.MessageRepository;
 import ru.exen.service.MessageService;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.IOException;
@@ -43,13 +44,13 @@ public class MessageController {
     @Value("${upload.path}")
     private String uploadPath;
 
-    @GetMapping("/support")
-    public String support(Map<String, Object> model) { return "support"; }
-
     @GetMapping("/")
     public String greeting(Map<String, Object> model) {
         return "greeting";
     }
+
+    @GetMapping("/support")
+    public String support(Map<String, Object> model) { return "support"; }
 
     @GetMapping("/main")
     public String main(
